@@ -1,44 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 export default function SwapStudio() {
-  const [activeCharacter, setActiveCharacter] = useState(0);
-
-  const characters = [
-    { 
-      name: 'Mira', 
-      thumb: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150',
-      video: 'https://assets.mixkit.co/videos/preview/mixkit-portrait-of-a-woman-with-a-neon-light-42549-large.mp4'
-    },
-    { 
-      name: 'Daniel', 
-      thumb: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150',
-      video: 'https://assets.mixkit.co/videos/preview/mixkit-man-in-a-suit-looking-at-the-camera-42558-large.mp4'
-    },
-    { 
-      name: 'Amara', 
-      thumb: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
-      video: 'https://assets.mixkit.co/videos/preview/mixkit-woman-with-colorful-makeup-42552-large.mp4'
-    },
-    { 
-      name: 'Jonas', 
-      thumb: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
-      video: 'https://storage.coverr.co/videos/KP78n9EWQAje1fm6Xr02N6zm7V01xxNRNK'
-    }
-  ];
-
   return (
-    <section className="py-24 px-4 bg-[#050505] border-t border-white/5 relative z-10 flex justify-center">
+    <section className="py-24 px-4 bg-[#050505] border-t border-white/5 relative z-10 flex flex-col items-center">
+      
+      <div className="text-center mb-12 max-w-3xl">
+        <h2 className="text-4xl md:text-6xl font-serif text-white mb-4">See the transformation.</h2>
+        <p className="text-gray-400 text-lg font-light">Watch a real-time, 4K HD swap in action. No editing, no delays. Just pure AI power.</p>
+      </div>
+
       <div className="max-w-5xl w-full">
-        
-        {/* The Main Studio Frame */}
-        <div className="bg-[#0d0d0d] rounded-3xl p-2 md:p-4 border border-white/10 shadow-[0_0_50px_rgba(212,175,55,0.05)] relative overflow-hidden">
+        {/* The Cinematic Video Frame */}
+        <div className="bg-[#0d0d0d] rounded-3xl p-2 md:p-4 border border-white/10 shadow-[0_0_80px_rgba(212,175,55,0.1)] relative overflow-hidden">
           
           <div className="aspect-video bg-black rounded-2xl relative overflow-hidden flex items-center justify-center">
             
-            {/* The AI Output Video */}
+            {/* The Main Demo Video (Auto-playing, No Swiping) */}
             <video 
-              key={activeCharacter}
-              src={characters[activeCharacter].video} 
+              src="https://assets.mixkit.co/videos/preview/mixkit-portrait-of-a-woman-with-a-neon-light-42549-large.mp4" 
               autoPlay 
               loop 
               muted 
@@ -46,55 +25,34 @@ export default function SwapStudio() {
               className="absolute inset-0 w-full h-full object-cover opacity-90"
             />
 
-            {/* Top Overlay Tags */}
-            <div className="absolute top-4 left-4 flex gap-2">
-              <span className="bg-[#d4af37] text-black text-[10px] font-bold px-3 py-1 rounded uppercase tracking-widest">AI Output</span>
-              <span className="bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1 rounded border border-white/10 italic">as {characters[activeCharacter].name}</span>
+            {/* Cinematic Overlays */}
+            <div className="absolute top-6 left-6 flex gap-3 z-20">
+              <span className="bg-[#d4af37] text-black text-xs font-bold px-4 py-2 rounded-md uppercase tracking-widest shadow-lg">4K AI Output</span>
+              <span className="bg-black/60 backdrop-blur-md text-white text-xs px-4 py-2 rounded-md border border-white/20 font-medium tracking-wide flex items-center gap-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Rendering Live
+              </span>
             </div>
 
-            {/* Live Indicator */}
-            <div className="absolute top-4 right-4 flex items-center gap-2">
-              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-              <span className="text-red-500 text-[10px] font-bold tracking-widest">LIVE</span>
+            <div className="absolute top-6 right-6 z-20">
+              <span className="text-white/80 text-sm font-mono tracking-widest border border-white/20 px-3 py-1 rounded backdrop-blur-sm bg-black/30">00:00:04:12</span>
             </div>
 
-            {/* Your Camera (Picture-in-Picture) */}
-            <div className="absolute bottom-4 left-4 w-1/3 md:w-1/4 aspect-video bg-gray-900 rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl z-20">
-              <video 
-                src="https://assets.mixkit.co/videos/preview/mixkit-young-man-smiling-at-the-camera-42812-large.mp4" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-2 left-2 bg-black/60 text-white text-[8px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Your Camera</div>
+            {/* Bottom Gradient for Text Legibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+
+            {/* Bottom Info Bar */}
+            <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end z-20">
+              <div>
+                <p className="text-[#d4af37] text-xs font-bold uppercase tracking-[0.2em] mb-1">Demo Sequence</p>
+                <p className="text-white text-2xl font-serif italic">Subject Alpha → Mira</p>
+              </div>
+              <div className="flex gap-2">
+                <span className="px-3 py-1 border border-white/30 rounded text-white text-[10px] uppercase tracking-wider backdrop-blur-md">Face Swap</p>
+                <span className="px-3 py-1 border border-white/30 rounded text-white text-[10px] uppercase tracking-wider backdrop-blur-md">Restyle</p>
+              </div>
             </div>
             
           </div>
-
-          {/* The Character Selector (Bottom Bar) */}
-          <div className="flex items-center justify-between mt-4 px-2">
-            <div className="flex gap-2 md:gap-4 overflow-x-auto py-2">
-              {characters.map((char, index) => (
-                <button 
-                  key={index}
-                  onClick={() => setActiveCharacter(index)}
-                  className={`relative w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden transition-all duration-300 flex-shrink-0 ${activeCharacter === index ? 'border-2 border-[#d4af37] scale-110 shadow-[0_0_20px_rgba(212,175,55,0.4)]' : 'border border-white/20 opacity-50 hover:opacity-100'}`}
-                >
-                  <img src={char.thumb} alt={char.name} className="w-full h-full object-cover" />
-                </button>
-              ))}
-            </div>
-
-            {/* Decorative Controls */}
-            <div className="flex gap-2 text-white/50">
-               <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center cursor-pointer hover:bg-white/10 transition">
-                 <div className="w-3 h-3 bg-white rounded-sm"></div>
-               </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
