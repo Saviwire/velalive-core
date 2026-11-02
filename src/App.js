@@ -1,4 +1,6 @@
 import React from 'react';
+import Hero from './components/Hero';
+import TopHighlights from './components/TopHighlights';
 import Carousel3D from './components/Carousel3D';
 import AdvancedFeatures from './components/AdvancedFeatures';
 import MasonryGallery from './components/MasonryGallery';
@@ -12,7 +14,6 @@ import InviteEarn from './components/InviteEarn';
 import Testimonials from './components/Testimonials';
 import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
-import LegalAndSupport from './components/LegalAndSupport';
 import Footer from './components/Footer';
 import AiSupport from './components/AiSupport';
 
@@ -29,15 +30,13 @@ function App() {
         </div>
       </nav>
       
-      {/* HERO SECTION */}
-      <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center', padding: '0 20px' }}>
-        <p style={{ color: '#d4af37', letterSpacing: '4px', fontSize: '12px', marginBottom: '20px', fontWeight: 'bold' }}>THE ULTIMATE AI PLATFORM</p>
-        <h2 style={{ fontSize: '60px', fontFamily: 'serif', margin: 0, lineHeight: '1.1' }}>Redefine your <br/><span style={{ fontStyle: 'italic', color: '#d4af37' }}>reality.</span></h2>
-        <p style={{ maxWidth: '600px', color: '#aaa', marginTop: '20px', lineHeight: '1.6', fontSize: '18px' }}>Experience the world's most advanced real-time AI video, voice, and avatar platform.</p>
-        <button style={{ marginTop: '40px', backgroundColor: '#d4af37', color: '#000', padding: '15px 40px', borderRadius: '30px', border: 'none', fontWeight: 'bold', fontSize: '16px' }}>Start Creating</button>
-      </main>
+      {/* 1. THE MASSIVE LUXURY HERO */}
+      <Hero />
 
-      {/* THE 16 MASSIVE SECTIONS */}
+      {/* 2. THE STATS & MARQUEE */}
+      <TopHighlights />
+
+      {/* 3. THE REST OF THE MASSIVE SECTIONS */}
       <Carousel3D />
       <AdvancedFeatures />
       <MasonryGallery />
@@ -51,10 +50,11 @@ function App() {
       <Testimonials />
       <Pricing />
       <FAQ />
-      <LegalAndSupport />
+      
+      {/* 4. THE FOOTER & LEGAL MODALS */}
       <Footer />
       
-      {/* FLOATING AI CHAT */}
+      {/* 5. FLOATING AI CHAT */}
       <AiSupport />
       
     </div>
