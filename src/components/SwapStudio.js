@@ -1,13 +1,13 @@
 import React from 'react';
 
 export default function SwapStudio() {
-  // Highly professional "talking head" videos from Pexels
   const demos = [
     {
       title: 'Face Swap',
       subject: 'Mira',
       badge: '4K ULTRA HD',
-      video: 'https://videos.pexels.com/video-files/4125025/4125025-uhd_2560_1440_25fps.mp4',
+      // 4K UHD Video (Woman talking to camera)
+      video: 'https://videos.pexels.com/video-files/9953342/9953342-uhd_2560_1440_25fps.mp4',
       poster: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800',
       pip: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400',
       avatars: [
@@ -21,9 +21,10 @@ export default function SwapStudio() {
       title: 'Head Swap',
       subject: 'Jonas',
       badge: '60 FPS LIVE',
+      // 4K UHD Video (Man talking to camera)
       video: 'https://videos.pexels.com/video-files/5995857/5995857-uhd_2560_1440_25fps.mp4',
       poster: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800',
-      pip: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400',
+      pip: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
       avatars: [
         'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100',
         'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100',
@@ -35,7 +36,8 @@ export default function SwapStudio() {
       title: 'Restyle',
       subject: 'Amara',
       badge: 'HDR 10-BIT',
-      video: 'https://videos.pexels.com/video-files/3196036/3196036-uhd_2560_1440_25fps.mp4',
+      // 4K UHD Video (Woman talking to camera)
+      video: 'https://videos.pexels.com/video-files/4125025/4125025-uhd_2560_1440_25fps.mp4',
       poster: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800',
       pip: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',
       avatars: [
@@ -49,9 +51,10 @@ export default function SwapStudio() {
       title: 'AI Companion',
       subject: 'Kira',
       badge: 'NEURAL LIVE',
-      video: 'https://videos.pexels.com/video-files/5091624/5091624-uhd_2560_1440_25fps.mp4',
+      // 4K UHD Video (Man talking to camera)
+      video: 'https://videos.pexels.com/video-files/3196036/3196036-uhd_2560_1440_25fps.mp4',
       poster: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800',
-      pip: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
+      pip: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400',
       avatars: [
         'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100',
         'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=100',
@@ -83,7 +86,6 @@ export default function SwapStudio() {
               {/* LEFT PANEL: Massive Video Area */}
               <div className="flex-grow w-full md:w-2/3 border-b md:border-b-0 md:border-r border-white/10 relative">
                 
-                {/* Browser Chrome Header */}
                 <div className="bg-[#111111] px-6 py-4 flex items-center justify-between border-b border-white/5">
                   <div className="flex gap-2">
                     <div className="w-3 h-3 rounded-full bg-white/10"></div>
@@ -101,6 +103,7 @@ export default function SwapStudio() {
                 </div>
 
                 <div className="aspect-[4/3] md:aspect-video bg-black relative">
+                  {/* PRELOAD AUTO + POSTER + CROSSORIGIN FIX FOR BLACK SCREEN */}
                   <video 
                     src={demo.video} 
                     poster={demo.poster}
@@ -108,14 +111,13 @@ export default function SwapStudio() {
                     loop 
                     muted 
                     playsInline 
-                    controls
+                    preload="auto"
                     crossOrigin="anonymous"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/40 pointer-events-none"></div>
 
-                  {/* Telemetry Overlay */}
                   <div className="absolute top-6 right-6 z-10 flex flex-col items-end gap-2 pointer-events-none">
                     <span className="text-white/60 text-[10px] font-mono tracking-widest border border-white/10 px-3 py-1 rounded backdrop-blur-md bg-black/20 flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span> LATENCY: 12ms
@@ -125,7 +127,6 @@ export default function SwapStudio() {
                     </span>
                   </div>
 
-                  {/* Top Left Tags */}
                   <div className="absolute top-6 left-6 flex flex-col items-start gap-3 z-10 pointer-events-none">
                     <span className="bg-[#d4af37] text-black text-[10px] md:text-xs font-bold px-4 py-2 rounded-md uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(212,175,55,0.3)]">
                       {demo.badge}
@@ -135,14 +136,12 @@ export default function SwapStudio() {
                     </span>
                   </div>
 
-                  {/* Picture-in-Picture Camera */}
                   <div className="absolute bottom-6 left-6 w-1/3 md:w-[25%] aspect-video bg-gray-900 rounded-xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] z-20 pointer-events-none">
                     <img src={demo.pip} alt="Your Camera" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-md text-white text-[8px] font-bold px-2 py-1 rounded uppercase tracking-[0.2em]">Your Camera</div>
                   </div>
 
-                  {/* Bottom Right Title */}
                   <div className="absolute bottom-6 right-6 text-right z-10 pointer-events-none">
                     <p className="text-white text-2xl md:text-4xl font-serif italic drop-shadow-2xl">{demo.title}</p>
                   </div>
@@ -152,7 +151,6 @@ export default function SwapStudio() {
               {/* RIGHT PANEL: The 100x Control Dashboard */}
               <div className="w-full md:w-1/3 bg-[#0d0d0d] flex flex-col p-6">
                 
-                {/* RESTORED NEURAL SETTINGS + MORE COMPLEXITY */}
                 <div className="mb-8">
                   <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-4 flex items-center gap-2">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d4af37" strokeWidth="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
@@ -160,7 +158,6 @@ export default function SwapStudio() {
                   </h4>
                   
                   <div className="space-y-5">
-                    {/* Slider 1 */}
                     <div>
                       <div className="flex justify-between text-[10px] text-gray-400 uppercase tracking-widest mb-1.5">
                         <span>Swap Intensity</span>
@@ -170,7 +167,6 @@ export default function SwapStudio() {
                         <div className="h-full bg-[#d4af37] w-[85%]"></div>
                       </div>
                     </div>
-                    {/* Slider 2 (RESTORED) */}
                     <div>
                       <div className="flex justify-between text-[10px] text-gray-400 uppercase tracking-widest mb-1.5">
                         <span>Skin Smoothing</span>
@@ -180,7 +176,6 @@ export default function SwapStudio() {
                         <div className="h-full bg-[#d4af37] w-[40%]"></div>
                       </div>
                     </div>
-                    {/* Slider 3 (NEW COMPLEXITY) */}
                     <div>
                       <div className="flex justify-between text-[10px] text-gray-400 uppercase tracking-widest mb-1.5">
                         <span>Color Grading</span>
