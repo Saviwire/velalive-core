@@ -2,6 +2,10 @@ import React from 'react';
 import Carousel3D from './components/Carousel3D';
 import DenseTools from './components/DenseTools';
 import Pricing from './components/Pricing';
+import MasonryGallery from './components/MasonryGallery';
+import SwapStudio from './components/SwapStudio';
+import AudioReactiveLab from './components/AudioReactiveLab';
+import AdvancedFeatures from './components/AdvancedFeatures';
 
 function App() {
   return (
@@ -19,7 +23,11 @@ function App() {
       </main>
 
       <Carousel3D />
+      <AdvancedFeatures />
+      <MasonryGallery />
+      <SwapStudio />
       <DenseTools />
+      <AudioReactiveLab />
       <Pricing />
       
     </div>
