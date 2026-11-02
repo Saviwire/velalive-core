@@ -13,7 +13,7 @@ export default function SignUpModal({ isOpen, onClose }) {
       alert("You must be 18 or older and agree to the Terms to continue.");
       return;
     }
-    // This is where Supabase will go later
+    // This is where Supabase database saving will happen later
     alert(`Welcome to Velalive, ${formData.name}! Your account is ready to be created.`);
     onClose();
   };
@@ -87,7 +87,7 @@ export default function SignUpModal({ isOpen, onClose }) {
 
           <button 
             type="submit"
-            className="w-full py-4 mt-6 bg-[#d4af37] text-black font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-white transition"
+            className="w-full py-4 mt-6 bg-[#d4af37] text-black font-bold text-xs uppercase tracking-widest rounded-xl hover:bg-white transition cursor-pointer"
           >
             Sign Up
           </button>
