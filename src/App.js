@@ -10,9 +10,14 @@ import AdvancedFeatures from './components/AdvancedFeatures';
 function App() {
   return (
     <div style={{ backgroundColor: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden' }}>
-      <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
+      
+      {/* NAVBAR WITH SIGN IN */}
+      <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
         <h1 style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold' }}>VELALIVE</h1>
-        <button style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold' }}>Sign Up</button>
+        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <button style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign In</button>
+          <button style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px' }}>Sign Up</button>
+        </div>
       </nav>
       
       <main style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', textAlign: 'center', padding: '0 20px' }}>
