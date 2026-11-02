@@ -6,8 +6,8 @@ export default function SwapStudio() {
       title: 'Face Swap',
       subject: 'Mira',
       badge: '4K ULTRA HD',
-      // 4K UHD Video (Woman talking to camera)
-      video: 'https://videos.pexels.com/video-files/9953342/9953342-uhd_2560_1440_25fps.mp4',
+      // Professional woman talking to camera
+      video: 'https://videos.pexels.com/video-files/4125025/4125025-uhd_2560_1440_25fps.mp4',
       poster: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800',
       pip: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400',
       avatars: [
@@ -21,7 +21,7 @@ export default function SwapStudio() {
       title: 'Head Swap',
       subject: 'Jonas',
       badge: '60 FPS LIVE',
-      // 4K UHD Video (Man talking to camera)
+      // Professional man talking to camera
       video: 'https://videos.pexels.com/video-files/5995857/5995857-uhd_2560_1440_25fps.mp4',
       poster: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800',
       pip: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400',
@@ -36,8 +36,8 @@ export default function SwapStudio() {
       title: 'Restyle',
       subject: 'Amara',
       badge: 'HDR 10-BIT',
-      // 4K UHD Video (Woman talking to camera)
-      video: 'https://videos.pexels.com/video-files/4125025/4125025-uhd_2560_1440_25fps.mp4',
+      // Professional woman talking to camera
+      video: 'https://videos.pexels.com/video-files/3196036/3196036-uhd_2560_1440_25fps.mp4',
       poster: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800',
       pip: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',
       avatars: [
@@ -51,8 +51,8 @@ export default function SwapStudio() {
       title: 'AI Companion',
       subject: 'Kira',
       badge: 'NEURAL LIVE',
-      // 4K UHD Video (Man talking to camera)
-      video: 'https://videos.pexels.com/video-files/3196036/3196036-uhd_2560_1440_25fps.mp4',
+      // Professional man talking to camera
+      video: 'https://videos.pexels.com/video-files/9953342/9953342-uhd_2560_1440_25fps.mp4',
       poster: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800',
       pip: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400',
       avatars: [
@@ -103,7 +103,6 @@ export default function SwapStudio() {
                 </div>
 
                 <div className="aspect-[4/3] md:aspect-video bg-black relative">
-                  {/* PRELOAD AUTO + POSTER + CROSSORIGIN FIX FOR BLACK SCREEN */}
                   <video 
                     src={demo.video} 
                     poster={demo.poster}
