@@ -6,9 +6,9 @@ export default function SwapStudio() {
       title: 'Face Swap',
       subject: 'Mira',
       badge: '4K ULTRA HD',
-      video: 'https://videos.pexels.com/video-files/9953342/9953342-hd_2048_1080_25fps.mp4',
+      video: 'https://videos.pexels.com/video-files/4125025/4125025-uhd_2560_1440_25fps.mp4', // Woman talking to webcam
       poster: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800',
-      pip: 'https://videos.pexels.com/video-files/9652473/9652473-hd_2048_1080_25fps.mp4',
+      pip: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400', // Static image for PiP
       avatars: [
         'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100',
         'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100',
@@ -20,9 +20,9 @@ export default function SwapStudio() {
       title: 'Head Swap',
       subject: 'Jonas',
       badge: '60 FPS LIVE',
-      video: 'https://videos.pexels.com/video-files/9652473/9652473-hd_2048_1080_25fps.mp4',
+      video: 'https://videos.pexels.com/video-files/5995857/5995857-uhd_2560_1440_25fps.mp4', // Man talking to webcam
       poster: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800',
-      pip: 'https://videos.pexels.com/video-files/4125025/4125025-uhd_2560_1440_25fps.mp4',
+      pip: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400', // Static image for PiP
       avatars: [
         'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100',
         'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100',
@@ -34,9 +34,9 @@ export default function SwapStudio() {
       title: 'Restyle',
       subject: 'Amara',
       badge: 'HDR 10-BIT',
-      video: 'https://videos.pexels.com/video-files/4125025/4125025-uhd_2560_1440_25fps.mp4',
+      video: 'https://videos.pexels.com/video-files/3196036/3196036-uhd_2560_1440_25fps.mp4', // Woman talking to webcam
       poster: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=800',
-      pip: 'https://videos.pexels.com/video-files/4630091/4630091-uhd_2560_1440_25fps.mp4',
+      pip: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400', // Static image for PiP
       avatars: [
         'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=100',
         'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100',
@@ -48,9 +48,9 @@ export default function SwapStudio() {
       title: 'AI Companion',
       subject: 'Kira',
       badge: 'NEURAL LIVE',
-      video: 'https://videos.pexels.com/video-files/4630091/4630091-uhd_2560_1440_25fps.mp4',
+      video: 'https://videos.pexels.com/video-files/5091624/5091624-uhd_2560_1440_25fps.mp4', // Man talking to webcam
       poster: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800',
-      pip: 'https://videos.pexels.com/video-files/9953342/9953342-hd_2048_1080_25fps.mp4',
+      pip: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400', // Static image for PiP
       avatars: [
         'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100',
         'https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=100',
@@ -99,7 +99,6 @@ export default function SwapStudio() {
                 </div>
 
                 <div className="aspect-[4/3] md:aspect-video bg-black relative">
-                  {/* ADDED controls AND crossOrigin TO FORCE PLAYBACK */}
                   <video 
                     src={demo.video} 
                     poster={demo.poster}
@@ -107,8 +106,6 @@ export default function SwapStudio() {
                     loop 
                     muted 
                     playsInline 
-                    controls
-                    crossOrigin="anonymous"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
 
@@ -126,8 +123,9 @@ export default function SwapStudio() {
                     </span>
                   </div>
 
+                  {/* STATIC IMAGE FOR PiP AS REQUESTED */}
                   <div className="absolute bottom-6 left-6 w-1/3 md:w-[25%] aspect-video bg-gray-900 rounded-xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] z-20 pointer-events-none">
-                    <video src={demo.pip} autoPlay loop muted playsInline crossOrigin="anonymous" className="w-full h-full object-cover" />
+                    <img src={demo.pip} alt="Your Camera" className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-md text-white text-[8px] font-bold px-2 py-1 rounded uppercase tracking-[0.2em]">Your Camera</div>
                   </div>
