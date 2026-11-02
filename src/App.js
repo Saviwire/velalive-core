@@ -24,27 +24,22 @@ function App() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check if user is already logged in when they load the site
   useEffect(() => {
     const user = localStorage.getItem('velalive_user');
     if (user) setIsAuthenticated(true);
   }, []);
 
-  const handleAuthSuccess = () => {
-    setIsAuthenticated(true);
-  };
-
+  const handleAuthSuccess = () => setIsAuthenticated(true);
+  
   const handleSignOut = () => {
     localStorage.removeItem('velalive_user');
     setIsAuthenticated(false);
   };
 
-  // Logic for the "Start Creating" / "Try Free" button
   const handleStartCreating = () => {
     if (isAuthenticated) {
-      alert("Welcome to the Studio! (This is where the AI App will open).");
+      alert("Welcome to the Studio! Your AI engine is ready.");
     } else {
-      // Force them to sign up if they aren't logged in
       setIsSignUpOpen(true);
     }
   };
@@ -55,7 +50,6 @@ function App() {
       <SignUpModal isOpen={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} onAuthSuccess={handleAuthSuccess} />
       <SignInModal isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} onAuthSuccess={handleAuthSuccess} />
 
-      {/* NAVBAR */}
       <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
         <a href="#" style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold', color: 'white', textDecoration: 'none' }}>VELALIVE</a>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
@@ -75,7 +69,6 @@ function App() {
         </div>
       </nav>
       
-      {/* PASSING THE AUTH CHECK TO THE HERO */}
       <Hero onStart={handleStartCreating} />
       
       <TopHighlights />
