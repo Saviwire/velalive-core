@@ -16,10 +16,10 @@ import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import AiSupport from './components/AiSupport';
-import SignUpModal from './components/SignUpModal'; // NEW IMPORT
+import SignUpModal from './components/SignUpModal';
 
 function App() {
-  const [isSignUpOpen, setIsSignUpOpen] = useState(false); // NEW STATE
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
 
   return (
     <div style={{ backgroundColor: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden' }}>
@@ -34,7 +34,7 @@ function App() {
           <a href="#pricing" style={{ color: '#aaa', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>Pricing</a>
           <button style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign In</button>
           <button 
-            onClick={() => setIsSignUpOpen(true)} // TRIGGER MODAL
+            onClick={() => setIsSignUpOpen(true)}
             style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}
           >
             Sign Up
@@ -56,7 +56,11 @@ function App() {
       <ModelHub />
       <InviteEarn />
       <Testimonials />
-      <div id="pricing"><Pricing /></div>
+      
+      <div id="pricing">
+        <Pricing onSignUp={() => setIsSignUpOpen(true)} />
+      </div>
+      
       <FAQ />
       <Footer />
       
