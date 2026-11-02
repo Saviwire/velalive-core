@@ -1,17 +1,24 @@
 import React from 'react';
 import Carousel3D from './components/Carousel3D';
-import DenseTools from './components/DenseTools';
-import Pricing from './components/Pricing';
+import AdvancedFeatures from './components/AdvancedFeatures';
 import MasonryGallery from './components/MasonryGallery';
 import SwapStudio from './components/SwapStudio';
+import DenseTools from './components/DenseTools';
 import AudioReactiveLab from './components/AudioReactiveLab';
-import AdvancedFeatures from './components/AdvancedFeatures';
+import AvatarEngine from './components/AvatarEngine';
+import ModelHub from './components/ModelHub';
+import Genjutsu from './components/Genjutsu';
+import InviteEarn from './components/InviteEarn';
+import Testimonials from './components/Testimonials';
+import Pricing from './components/Pricing';
+import FAQ from './components/FAQ';
+import Footer from './components/Footer';
+import AiSupport from './components/AiSupport';
 
 function App() {
   return (
     <div style={{ backgroundColor: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden' }}>
       
-      {/* NAVBAR WITH SIGN IN */}
       <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
         <h1 style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold' }}>VELALIVE</h1>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
@@ -31,10 +38,18 @@ function App() {
       <AdvancedFeatures />
       <MasonryGallery />
       <SwapStudio />
+      <Genjutsu />
       <DenseTools />
       <AudioReactiveLab />
+      <AvatarEngine />
+      <ModelHub />
+      <InviteEarn />
+      <Testimonials />
       <Pricing />
+      <FAQ />
+      <Footer />
       
+      <AiSupport />
     </div>
   );
 }
