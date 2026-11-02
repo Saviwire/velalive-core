@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Hero from './components/Hero';
 import TopHighlights from './components/TopHighlights';
 import Carousel3D from './components/Carousel3D';
@@ -16,18 +16,29 @@ import Pricing from './components/Pricing';
 import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 import AiSupport from './components/AiSupport';
+import SignUpModal from './components/SignUpModal'; // NEW IMPORT
 
 function App() {
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false); // NEW STATE
+
   return (
     <div style={{ backgroundColor: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden' }}>
       
+      {/* SIGN UP MODAL */}
+      <SignUpModal isOpen={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} />
+
       {/* NAVBAR */}
       <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
         <a href="#" style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold', color: 'white', textDecoration: 'none' }}>VELALIVE</a>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
           <a href="#pricing" style={{ color: '#aaa', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>Pricing</a>
           <button style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign In</button>
-          <button style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign Up</button>
+          <button 
+            onClick={() => setIsSignUpOpen(true)} // TRIGGER MODAL
+            style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}
+          >
+            Sign Up
+          </button>
         </div>
       </nav>
       
