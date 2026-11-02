@@ -18,27 +18,41 @@ import Footer from './components/Footer';
 import AiSupport from './components/AiSupport';
 import SignUpModal from './components/SignUpModal';
 import SignInModal from './components/SignInModal';
+import Dashboard from './components/Dashboard'; // IMPORT DASHBOARD
 
 function App() {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+  
+  // NEW STATE: Controls whether we see the landing page or the dashboard
+  const [currentView, setCurrentView] = useState('landing');
 
   useEffect(() => {
     const user = localStorage.getItem('velalive_user');
-    if (user) setIsAuthenticated(true);
+    if (user) {
+      setIsAuthenticated(true);
+      setUserEmail(user);
+    }
   }, []);
 
-  const handleAuthSuccess = () => setIsAuthenticated(true);
-  
+  const handleAuthSuccess = (email) => {
+    setIsAuthenticated(true);
+    setUserEmail(email);
+    setCurrentView('dashboard'); // AUTOMATICALLY REDIRECT TO DASHBOARD AFTER LOGIN
+  };
+
   const handleSignOut = () => {
     localStorage.removeItem('velalive_user');
     setIsAuthenticated(false);
+    setUserEmail('');
+    setCurrentView('landing'); // BACK TO HOMEPAGE ON SIGN OUT
   };
 
   const handleStartCreating = () => {
     if (isAuthenticated) {
-      alert("Welcome to the Studio! Your AI engine is ready.");
+      setCurrentView('dashboard'); // GO TO DASHBOARD IF ALREADY LOGGED IN
     } else {
       setIsSignUpOpen(true);
     }
@@ -50,43 +64,53 @@ function App() {
       <SignUpModal isOpen={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} onAuthSuccess={handleAuthSuccess} />
       <SignInModal isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} onAuthSuccess={handleAuthSuccess} />
 
-      <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
-        <a href="#" style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold', color: 'white', textDecoration: 'none' }}>VELALIVE</a>
-        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-          <a href="#pricing" style={{ color: '#aaa', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>Pricing</a>
+      {/* CONDITIONAL ROUTING: Show Dashboard OR Landing Page */}
+      {currentView === 'dashboard' ? (
+        <Dashboard 
+          userEmail={userEmail} 
+          onSignOut={handleSignOut} 
+          onBackToSite={() => setCurrentView('landing')} 
+        />
+      ) : (
+        <>
+          <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
+            <a href="#" style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold', color: 'white', textDecoration: 'none' }}>VELALIVE</a>
+            <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+              <a href="#pricing" style={{ color: '#aaa', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>Pricing</a>
+              
+              {isAuthenticated ? (
+                <>
+                  <button onClick={() => setCurrentView('dashboard')} style={{ backgroundColor: 'transparent', color: '#d4af37', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Go to Dashboard</button>
+                  <button onClick={handleSignOut} style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign Out</button>
+                </>
+              ) : (
+                <>
+                  <button onClick={() => setIsSignInOpen(true)} style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign In</button>
+                  <button onClick={() => setIsSignUpOpen(true)} style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign Up</button>
+                </>
+              )}
+            </div>
+          </nav>
           
-          {isAuthenticated ? (
-            <>
-              <span style={{ color: '#d4af37', fontSize: '12px', fontWeight: 'bold' }}>PRO USER</span>
-              <button onClick={handleSignOut} style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign Out</button>
-            </>
-          ) : (
-            <>
-              <button onClick={() => setIsSignInOpen(true)} style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign In</button>
-              <button onClick={() => setIsSignUpOpen(true)} style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign Up</button>
-            </>
-          )}
-        </div>
-      </nav>
-      
-      <Hero onStart={handleStartCreating} />
-      
-      <TopHighlights />
-      <div id="studio"><Carousel3D /></div>
-      <AdvancedFeatures />
-      <MasonryGallery />
-      <SwapStudio />
-      <div id="genjutsu"><Genjutsu /></div>
-      <div id="tools"><DenseTools /></div>
-      <AudioReactiveLab />
-      <AvatarEngine />
-      <ModelHub />
-      <InviteEarn />
-      <Testimonials />
-      <div id="pricing"><Pricing onSignUp={() => setIsSignUpOpen(true)} /></div>
-      <FAQ />
-      <Footer />
-      <AiSupport />
+          <Hero onStart={handleStartCreating} />
+          <TopHighlights />
+          <div id="studio"><Carousel3D /></div>
+          <AdvancedFeatures />
+          <MasonryGallery />
+          <SwapStudio />
+          <div id="genjutsu"><Genjutsu /></div>
+          <div id="tools"><DenseTools /></div>
+          <AudioReactiveLab />
+          <AvatarEngine />
+          <ModelHub />
+          <InviteEarn />
+          <Testimonials />
+          <div id="pricing"><Pricing onSignUp={() => setIsSignUpOpen(true)} /></div>
+          <FAQ />
+          <Footer />
+          <AiSupport />
+        </>
+      )}
     </div>
   );
 }
