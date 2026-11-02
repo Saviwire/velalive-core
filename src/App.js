@@ -23,40 +23,33 @@ function App() {
       
       {/* NAVBAR */}
       <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
-        <h1 style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold' }}>VELALIVE</h1>
+        <a href="#" style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold', color: 'white', textDecoration: 'none' }}>VELALIVE</a>
         <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+          <a href="#pricing" style={{ color: '#aaa', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>Pricing</a>
           <button style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign In</button>
-          <button style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px' }}>Sign Up</button>
+          <button style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign Up</button>
         </div>
       </nav>
       
-      {/* 1. THE MASSIVE LUXURY HERO */}
       <Hero />
-
-      {/* 2. THE STATS & MARQUEE */}
       <TopHighlights />
-
-      {/* 3. THE REST OF THE MASSIVE SECTIONS */}
-      <Carousel3D />
+      
+      <div id="studio"><Carousel3D /></div>
       <AdvancedFeatures />
       <MasonryGallery />
       <SwapStudio />
-      <Genjutsu />
-      <DenseTools />
+      <div id="genjutsu"><Genjutsu /></div>
+      <div id="tools"><DenseTools /></div>
       <AudioReactiveLab />
       <AvatarEngine />
       <ModelHub />
       <InviteEarn />
       <Testimonials />
-      <Pricing />
+      <div id="pricing"><Pricing /></div>
       <FAQ />
-      
-      {/* 4. THE FOOTER & LEGAL MODALS */}
       <Footer />
       
-      {/* 5. FLOATING AI CHAT */}
       <AiSupport />
-      
     </div>
   );
 }
