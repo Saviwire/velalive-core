@@ -15,13 +15,14 @@ export default function Pricing({ onSignUp }) {
             <h3 className="text-xl font-serif text-white mb-2">Starter</h3>
             <p className="text-gray-400 text-sm mb-6">For testing the waters</p>
             <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-5xl font-bold text-white">$12</span>
+              <span className="text-5xl font-bold text-white">$3</span>
               <span className="text-gray-500">/mo</span>
             </div>
-            <button onClick={onSignUp} className="w-full py-4 border border-white/20 text-white font-bold text-xs uppercase tracking-widest rounded-full hover:bg-white/5 mb-8 transition cursor-pointer">Choose Starter</button>
+            <button onClick={onSignUp} className="w-full py-4 border border-white/20 text-white font-bold text-xs uppercase tracking-widest rounded-full hover:bg-white/5 mb-8 transition cursor-pointer">Get Started</button>
             <ul className="space-y-4 text-sm text-gray-400 border-t border-white/10 pt-6">
               <li className="flex justify-between items-center"><span>Live Face Swap</span><span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white">15 min</span></li>
               <li className="flex justify-between items-center"><span>AI Voice Changer</span><span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white">10 min</span></li>
+              <li className="flex justify-between items-center"><span>720p Video Gen</span><span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white">Watermarked</span></li>
             </ul>
           </div>
 
@@ -40,6 +41,7 @@ export default function Pricing({ onSignUp }) {
             <ul className="space-y-4 text-sm text-gray-300 border-t border-white/10 pt-6">
               <li className="flex justify-between items-center"><span>Live Face Swap</span><span className="px-3 py-1 bg-[#d4af37]/20 text-[#d4af37] rounded-full text-xs font-bold">40 min</span></li>
               <li className="flex justify-between items-center"><span>Video Face Swap</span><span className="px-3 py-1 bg-[#d4af37]/20 text-[#d4af37] rounded-full text-xs font-bold">40 min</span></li>
+              <li className="flex justify-between items-center"><span>4K Video Gen</span><span className="px-3 py-1 bg-[#d4af37]/20 text-[#d4af37] rounded-full text-xs font-bold">No Watermark</span></li>
             </ul>
           </div>
 
@@ -55,9 +57,22 @@ export default function Pricing({ onSignUp }) {
             <ul className="space-y-4 text-sm text-gray-400 border-t border-white/10 pt-6">
               <li className="flex justify-between items-center"><span>Live Face Swap</span><span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white">150 min</span></li>
               <li className="flex justify-between items-center"><span>AI Voice Changer</span><span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white">120 min</span></li>
+              <li className="flex justify-between items-center"><span>API Access</span><span className="px-3 py-1 bg-white/5 rounded-full text-xs text-white">Included</span></li>
             </ul>
           </div>
         </div>
+
+        {/* HEAVY DUTY ADD-ONS */}
+        <div className="max-w-5xl mx-auto mt-12 bg-[#141414] border border-[#d4af37]/30 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-[0_0_30px_rgba(212,175,55,0.05)]">
+          <div>
+            <h3 className="text-2xl font-serif text-[#d4af37] mb-2">Heavy Duty Add-Ons</h3>
+            <p className="text-gray-400 text-sm max-w-xl">Need extra 4K rendering, longer video calls, or bulk API access? Top up your credits anytime without upgrading your base plan.</p>
+          </div>
+          <button onClick={onSignUp} className="px-8 py-4 bg-white text-black font-bold text-xs uppercase tracking-widest rounded-full hover:bg-[#d4af37] transition whitespace-nowrap">
+            Buy Credits
+          </button>
+        </div>
+
       </div>
     </section>
   );
