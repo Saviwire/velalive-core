@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useRoute } from './useRoute';
+import { getToolById, TOOL_CATALOG } from './tools/registry';
+import ToolPage from './components/ToolPage';
 import Hero from './components/Hero';
 import TopHighlights from './components/TopHighlights';
 import Carousel3D from './components/Carousel3D';
@@ -18,99 +21,143 @@ import Footer from './components/Footer';
 import AiSupport from './components/AiSupport';
 import SignUpModal from './components/SignUpModal';
 import SignInModal from './components/SignInModal';
-import Dashboard from './components/Dashboard'; // IMPORT DASHBOARD
+import Dashboard from './components/Dashboard';
 
 function App() {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState('');
-  
-  // NEW STATE: Controls whether we see the landing page or the dashboard
   const [currentView, setCurrentView] = useState('landing');
 
-  useEffect(() => {
-    const user = localStorage.getItem('velalive_user');
-    if (user) {
-      setIsAuthenticated(true);
-      setUserEmail(user);
-    }
-  }, []);
+  const route = useRoute();
+
+  const requestedTool = route.toolId ? getToolById(route.toolId) : null;
 
   const handleAuthSuccess = (email) => {
     setIsAuthenticated(true);
     setUserEmail(email);
-    setCurrentView('dashboard'); // AUTOMATICALLY REDIRECT TO DASHBOARD AFTER LOGIN
+    setCurrentView('dashboard');
   };
 
   const handleSignOut = () => {
+    // The only stored session is a fake one written by the modals; clear it.
+    // A real Supabase session is cleared inside the modals themselves.
     localStorage.removeItem('velalive_user');
     setIsAuthenticated(false);
     setUserEmail('');
-    setCurrentView('landing'); // BACK TO HOMEPAGE ON SIGN OUT
+    setCurrentView('landing');
   };
 
   const handleStartCreating = () => {
     if (isAuthenticated) {
-      setCurrentView('dashboard'); // GO TO DASHBOARD IF ALREADY LOGGED IN
+      setCurrentView('dashboard');
     } else {
       setIsSignUpOpen(true);
     }
   };
 
-  return (
-    <div style={{ backgroundColor: '#0a0a0a', color: '#f5f5f0', minHeight: '100vh', fontFamily: 'sans-serif', overflowX: 'hidden' }}>
-      
-      <SignUpModal isOpen={isSignUpOpen} onClose={() => setIsSignUpOpen(false)} onAuthSuccess={handleAuthSuccess} />
-      <SignInModal isOpen={isSignInOpen} onClose={() => setIsSignInOpen(false)} onAuthSuccess={handleAuthSuccess} />
+  // A requested tool route wins over the dashboard/landing split. Unknown
+  // ids fall through to a not-found page rather than a blank screen.
+  if (route.toolId) {
+    return <ToolPage tool={requestedTool} toolId={route.toolId} />;
+  }
 
-      {/* CONDITIONAL ROUTING: Show Dashboard OR Landing Page */}
-      {currentView === 'dashboard' ? (
-        <Dashboard 
-          userEmail={userEmail} 
-          onSignOut={handleSignOut} 
-          onBackToSite={() => setCurrentView('landing')} 
-        />
-      ) : (
-        <>
-          <nav style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 50, backgroundColor: 'rgba(10,10,10,0.9)', backdropFilter: 'blur(10px)' }}>
-            <a href="#" style={{ fontSize: '24px', letterSpacing: '2px', fontWeight: 'bold', color: 'white', textDecoration: 'none' }}>VELALIVE</a>
-            <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-              <a href="#pricing" style={{ color: '#aaa', textDecoration: 'none', fontSize: '14px', fontWeight: 'bold' }}>Pricing</a>
-              
-              {isAuthenticated ? (
-                <>
-                  <button onClick={() => setCurrentView('dashboard')} style={{ backgroundColor: 'transparent', color: '#d4af37', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Go to Dashboard</button>
-                  <button onClick={handleSignOut} style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign Out</button>
-                </>
-              ) : (
-                <>
-                  <button onClick={() => setIsSignInOpen(true)} style={{ backgroundColor: 'transparent', color: '#fff', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign In</button>
-                  <button onClick={() => setIsSignUpOpen(true)} style={{ backgroundColor: '#d4af37', color: '#000', padding: '10px 20px', borderRadius: '20px', border: 'none', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Sign Up</button>
-                </>
-              )}
-            </div>
-          </nav>
-          
-          <Hero onStart={handleStartCreating} />
-          <TopHighlights />
-          <div id="studio"><Carousel3D /></div>
-          <AdvancedFeatures />
-          <MasonryGallery />
-          <SwapStudio />
-          <div id="genjutsu"><Genjutsu /></div>
-          <div id="tools"><DenseTools /></div>
-          <AudioReactiveLab />
-          <AvatarEngine />
-          <ModelHub />
-          <InviteEarn />
-          <Testimonials />
-          <div id="pricing"><Pricing onSignUp={() => setIsSignUpOpen(true)} /></div>
-          <FAQ />
-          <Footer />
-          <AiSupport />
-        </>
-      )}
+  if (currentView === 'dashboard') {
+    return (
+      <Dashboard
+        userEmail={userEmail}
+        onSignOut={handleSignOut}
+        onBackToSite={() => setCurrentView('landing')}
+      />
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0a0a0a] text-[#f5f5f0] font-sans">
+      <SignUpModal
+        isOpen={isSignUpOpen}
+        onClose={() => setIsSignUpOpen(false)}
+        onAuthSuccess={handleAuthSuccess}
+      />
+      <SignInModal
+        isOpen={isSignInOpen}
+        onClose={() => setIsSignInOpen(false)}
+        onAuthSuccess={handleAuthSuccess}
+      />
+
+      <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#0a0a0a]/90 px-4 py-4 backdrop-blur-md md:px-6">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
+          <a href="#top" className="text-lg font-bold tracking-[0.2em] text-white no-underline md:text-2xl">
+            VELALIVE
+          </a>
+          <div className="flex items-center gap-2 md:gap-6">
+            <a href="#pricing" className="hidden text-xs font-bold text-gray-300 no-underline hover:text-white sm:inline md:text-sm">
+              Pricing
+            </a>
+            {isAuthenticated ? (
+              <>
+                <button
+                  onClick={() => setCurrentView('dashboard')}
+                  className="border-none bg-transparent text-xs font-bold text-[#d4af37] md:text-sm"
+                >
+                  Dashboard
+                </button>
+                <button
+                  onClick={handleSignOut}
+                  className="border-none bg-transparent text-xs font-bold text-white md:text-sm"
+                >
+                  Sign Out
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => setIsSignInOpen(true)}
+                  className="border-none bg-transparent text-xs font-bold text-white md:text-sm"
+                >
+                  Sign In
+                </button>
+              </>
+            )}
+            {!isAuthenticated && (
+              <button
+                onClick={() => setIsSignUpOpen(true)}
+                className="rounded-full bg-[#d4af37] px-3 py-2 text-[11px] font-bold text-black transition-colors hover:bg-white md:px-5 md:text-sm"
+              >
+                Sign Up
+              </button>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      <main className="pt-16">
+        <div id="top" />
+        <Hero onStart={handleStartCreating} />
+        <TopHighlights />
+        <div id="studio">
+          <Carousel3D />
+        </div>
+        <AdvancedFeatures />
+        <MasonryGallery />
+        <SwapStudio />
+        <div id="genjutsu">
+          <Genjutsu />
+        </div>
+        <DenseTools />
+        <AudioReactiveLab />
+        <AvatarEngine />
+        <ModelHub />
+        <InviteEarn />
+        <Testimonials />
+        <div id="pricing">
+          <Pricing onSignUp={() => setIsSignUpOpen(true)} />
+        </div>
+        <FAQ />
+        <Footer />
+        <AiSupport />
+      </main>
     </div>
   );
 }
