@@ -1,7 +1,7 @@
 # Dependencies
 node_modules/
 
-# Build output ow
+# Build output
 build/
 dist/
 
@@ -20,6 +20,7 @@ Thumbs.db
 .idea/
 .vscode/
 .tmp/
-build-output.txt
+# Local build captures (build-output.txt, build-verify-new.txt)
+build-*.txt
 serve-hero/
 nodever.txt
