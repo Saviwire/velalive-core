@@ -1,102 +1,66 @@
 import React, { useState } from 'react';
-import { supabase } from '../supabaseClient'; 
+import { supabase, SUPABASE_AUTH_STATE } from '../supabaseClient';
 
 export default function SignUpModal({ isOpen, onClose, onAuthSuccess }) {
-  const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [notice, setNotice] = useState('');
   const [error, setError] = useState('');
-
   if (!isOpen) return null;
+  const notConnected = SUPABASE_AUTH_STATE !== 'configured';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     setError('');
-
-    // 👑 GOD MODE BACKDOOR
-    if (formData.email === 'waynejackson706@gmail.com') {
-      setIsSuccess(true);
-      localStorage.setItem('velalive_user', formData.email);
-      setTimeout(() => {
-        setIsSuccess(false);
-        onAuthSuccess(formData.email);
-        onClose();
-      }, 1000);
-      return;
-    }
-
-    // NORMAL SUPABASE SIGNUP
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
-      setIsLoading(false);
-      return;
-    }
-
+    setNotice('');
+    setIsLoading(true);
     try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-      });
-
+      const { data, error: authError } = await supabase.auth.signUp({ email, password });
       if (authError) throw authError;
-
-      if (authData.user) {
-        await supabase.from('profiles').insert([{ id: authData.user.id, email: formData.email }]);
-      }
-
-      setIsSuccess(true);
-      localStorage.setItem('velalive_user', formData.email);
-      
-      setTimeout(() => {
-        setIsSuccess(false);
-        onAuthSuccess(formData.email);
+      if (data && data.session) {
+        onAuthSuccess();
         onClose();
-      }, 1500);
-
+      } else {
+        setNotice('Check your inbox. The account is created and waiting for its confirmation link.');
+      }
     } catch (err) {
-      setError(err.message);
+      setError(err && err.message ? err.message : 'Sign-up failed.');
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-      <div className="bg-[#141414] border border-white/10 rounded-3xl p-6 md:p-8 max-w-md w-full relative shadow-[0_0_50px_rgba(0,0,0,0.8)] max-h-[90vh] overflow-y-auto">
-        <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl transition-colors">&times;</button>
-        
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-white mb-2">Sign-up and receive your FREE credits</h2>
-          <p className="text-gray-400 text-sm">Already have an account? <button onClick={onClose} className="text-[#d4af37] hover:underline font-bold">Sign in</button></p>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
+      <div className="relative w-full max-w-md rounded-3xl border border-white/10 bg-[#141414] p-6 shadow-[0_0_50px_rgba(0,0,0,0.8)] md:p-8">
+        <button type="button" onClick={onClose} className="absolute right-4 top-4 text-2xl text-gray-400 transition-colors hover:text-white">&times;</button>
+        <div className="mb-8 text-center">
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[#d4af37]">Velalive</p>
+          <h2 className="mb-2 font-serif text-2xl text-white">Create your studio account</h2>
+          <p className="text-sm text-gray-400">Already have one? <button type="button" onClick={onClose} className="font-bold text-[#d4af37] hover:underline">Sign in</button></p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email</label>
-            <input type="email" required className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#d4af37] transition" placeholder="you@example.com" onChange={(e) => setFormData({...formData, email: e.target.value})} />
+        {notConnected ? (
+          <div className="rounded-2xl border border-white/10 bg-[#0d0d0d] p-4 text-sm leading-relaxed text-gray-400">
+            Accounts are not connected on this build. Signing up needs a Supabase project URL and its public anon key in the build environment.
           </div>
-
-          {/* HIDE PASSWORD FIELDS FOR GOD MODE */}
-          {formData.email !== 'waynejackson706@gmail.com' && (
-            <>
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Password</label>
-                <input type="password" required className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#d4af37] transition" placeholder="At least 8 characters" onChange={(e) => setFormData({...formData, password: e.target.value})} />
-              </div>
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Confirm Password</label>
-                <input type="password" required className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-[#d4af37] transition" placeholder="Confirm your password" onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})} />
-              </div>
-            </>
-          )}
-
-          {error && <p className="text-red-500 text-xs font-bold text-center">{error}</p>}
-          
-          <button type="submit" disabled={isLoading || isSuccess} className={`w-full py-4 mt-6 font-bold text-xs uppercase tracking-widest rounded-xl transition-all flex justify-center items-center ${isSuccess ? 'bg-green-500 text-white' : 'bg-[#d4af37] text-black hover:bg-white'}`}>
-            {isLoading ? 'Creating Account...' : isSuccess ? 'Access Granted ✓' : 'Sign Up'}
-          </button>
-        </form>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400" htmlFor="su-email">Email</label>
+              <input id="su-email" type="email" required value={email} placeholder="you@example.com" onChange={(e) => setEmail(e.target.value)} className="w-full rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-3 text-white outline-none transition focus:border-[#d4af37]" />
+            </div>
+            <div>
+              <label className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400" htmlFor="su-pass">Password</label>
+              <input id="su-pass" type="password" required minLength={8} value={password} placeholder="At least 8 characters" onChange={(e) => setPassword(e.target.value)} className="w-full rounded-xl border border-white/10 bg-[#0a0a0a] px-4 py-3 text-white outline-none transition focus:border-[#d4af37]" />
+            </div>
+            {error ? <p className="text-center text-xs font-bold text-red-400">{error}</p> : null}
+            {notice ? <p className="text-center text-xs leading-relaxed text-[#d4af37]">{notice}</p> : null}
+            <button type="submit" disabled={isLoading} className="mt-2 w-full rounded-xl bg-[#d4af37] py-3 text-xs font-bold uppercase tracking-widest text-black transition hover:bg-white disabled:opacity-60">
+              {isLoading ? 'Creating account' : 'Create account'}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
