@@ -1,36 +1,63 @@
 import React from 'react';
 
+/**
+ * Hero.
+ *
+ * The previous background was an external Pexels mp4 that now returns 404, so
+ * the whole first screen rendered as a black rectangle. Rather than hotlink
+ * some replacement footage nobody actually owns, the backdrop is a
+ * self-contained CSS field and the absence of real demo footage is stated
+ * plainly instead of being dressed up as a result.
+ *
+ * The two CTAs are intentionally unchanged: "Start Creating" (onStart) and
+ * "View Gallery" (#gallery).
+ */
 export default function Hero({ onStart }) {
   return (
-    <div className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-[#050505]">
-      <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-40">
-        <source src="https://videos.pexels.com/video-files/3129595/3129595-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-      </video>
+    <div className="relative flex min-h-[92vh] w-full flex-col items-center justify-center overflow-hidden bg-[#050505]">
+      {/* Atmosphere: CSS only. No external request, no video decode on mobile. */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="hero-sheen absolute inset-0" />
+        <div className="hero-grain absolute inset-0" />
+      </div>
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#050505] via-[#050505]/95 to-transparent"
+        aria-hidden="true"
+      />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-[#050505]"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/60 via-transparent to-[#050505]/60"></div>
-
-      <div className="relative z-10 text-center px-4 mb-24 mt-20">
-        <p className="text-[#d4af37] tracking-[0.5em] text-xs md:text-sm font-bold mb-4 uppercase drop-shadow-lg">Welcome to Velalive</p>
-        <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 drop-shadow-2xl">The Ultimate AI <br/><span className="italic text-[#d4af37]">Experience.</span></h1>
-        <p className="max-w-2xl mx-auto text-gray-300 text-lg md:text-xl font-light leading-relaxed">Step into the next dimension of content creation. Real-time 4K video, voice cloning, and AI avatars—all running directly in your browser.</p>
+      <div className="relative z-10 mb-24 mt-20 px-4 text-center">
+        <p className="mb-4 text-xs font-bold uppercase tracking-[0.5em] text-[#d4af37] md:text-sm">Welcome to Velalive</p>
+        <h1 className="mb-6 font-serif text-5xl text-white drop-shadow-2xl md:text-7xl">
+          The Ultimate AI <br />
+          <span className="italic text-[#d4af37]">Experience.</span>
+        </h1>
+        <p className="mx-auto max-w-2xl text-lg font-light leading-relaxed text-gray-300 md:text-xl">
+          Step into the next dimension of content creation. Real-time 4K video, voice cloning, and AI avatars - all running directly in your browser.
+        </p>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center text-center px-4 mt-auto mb-20">
-        <h2 className="text-3xl md:text-5xl font-serif text-white mb-6">Ready to redefine your reality?</h2>
-        <div className="flex gap-4">
-          {/* THIS BUTTON NOW TRIGGERS THE AUTH CHECK */}
-          <button onClick={onStart} className="px-10 py-4 bg-[#d4af37] text-black font-bold text-sm uppercase tracking-widest rounded-full hover:bg-white transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)]">
+      <div className="relative z-10 mb-20 mt-auto flex flex-col items-center px-4 text-center">
+        <h2 className="mb-6 font-serif text-3xl text-white md:text-5xl">Ready to redefine your reality?</h2>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <button
+            onClick={onStart}
+            className="rounded-full bg-[#d4af37] px-10 py-4 text-sm font-bold uppercase tracking-widest text-black shadow-[0_0_30px_rgba(212,175,55,0.3)] transition-all hover:bg-white"
+          >
             Start Creating
           </button>
-          <a href="#gallery" className="px-10 py-4 border border-white/30 text-white font-bold text-sm uppercase tracking-widest rounded-full hover:bg-white/10 transition-all backdrop-blur-md text-center">
+          <a
+            href="#gallery"
+            className="rounded-full border border-white/30 px-10 py-4 text-center text-sm font-bold uppercase tracking-widest text-white no-underline backdrop-blur-md transition-all hover:bg-white/10"
+          >
             View Gallery
           </a>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce z-10 hidden md:block">
-        <svg className="w-6 h-6 text-[#d4af37]" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+      <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 animate-bounce md:block" aria-hidden="true">
+        <svg className="h-6 w-6 text-[#d4af37]" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
       </div>
     </div>
   );

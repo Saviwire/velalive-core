@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import { useRoute } from './useRoute';
 import { getToolById, TOOL_CATALOG } from './tools/registry';
 import ToolPage from './components/ToolPage';
 import Hero from './components/Hero';
 import TopHighlights from './components/TopHighlights';
-import Carousel3D from './components/Carousel3D';
 import AdvancedFeatures from './components/AdvancedFeatures';
 import MasonryGallery from './components/MasonryGallery';
 import SwapStudio from './components/SwapStudio';
@@ -22,6 +21,10 @@ import AiSupport from './components/AiSupport';
 import SignUpModal from './components/SignUpModal';
 import SignInModal from './components/SignInModal';
 import Dashboard from './components/Dashboard';
+
+// three.js lives only in this section, so load it in its own chunk: the
+// initial bundle stays small and the 3D chunk arrives on demand.
+const Carousel3D = lazy(() => import('./components/Carousel3D'));
 
 function App() {
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -137,7 +140,9 @@ function App() {
         <Hero onStart={handleStartCreating} />
         <TopHighlights />
         <div id="studio">
-          <Carousel3D />
+          <Suspense fallback={<div className="h-96 bg-[#0a0a0a]" />}>
+            <Carousel3D />
+          </Suspense>
         </div>
         <AdvancedFeatures />
         <MasonryGallery />

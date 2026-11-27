@@ -2,53 +2,106 @@
 @tailwind components;
 @tailwind utilities;
 
-/**
- * Tailwind preflight already sets `background: transparent`, `border: 0` and
- * `font: inherit` on form controls. Without this file the classes like
- * `bg-[#d4af37]` on buttons are compiled but the controls kept the browser's
- * native light chrome. Keep the reset explicit here so the design is stable
- * even if someone toggles preflight.
+/*
+ * Base page treatment. Everything else (buttons, inputs, cards) is styled
+ * with Tailwind utilities in the components, so nothing here should redeclare
+ * `background`/`border` on interactive elements.
  *
- * Only touch the *border* — `all: unset` / `border: 0` here would also reset
- * the 1px borders that components draw intentionally.
+ * Tailwind's utilities are emitted into the same cascade layer as plain rules,
+ * so an element selector like `button { border: ... }` wins on source order. A
+ * global button border would therefore silently beat `border-none` and
+ * `border-white/10` on every component and draw a grey box around each
+ * outline button on the site.
  */
-button,
-input,
-textarea,
-select {
-  font: inherit;
-  color: inherit;
-  outline: none;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-input[type='checkbox'],
-input[type='radio'] {
-  -webkit-appearance: revert;
-  appearance: revert;
-}
-
-/* Neutral base for controls the components style by class only */
-button {
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  cursor: pointer;
-}
-
-input,
-textarea,
-select {
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
 
 html,
 body {
   background-color: #0a0a0a;
   color: #f5f5f0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Keep hash-routed sections clear of the fixed header. */
+#studio,
+#genjutsu,
+#tools,
+#pricing,
+#gallery {
+  scroll-margin-top: 5rem;
+}
+
+::selection {
+  background: #d4af37;
+  color: #0a0a0a;
+}
+
+:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 3px;
+}
+
+/*
+ * Hero backdrop
+ * Replaces an external Pexels mp4 (now 404) with a self-contained backdrop:
+ * no network request, no video decode on mobile, no third-party licence.
+ * A real swap clip can replace this layer later without touching the CTA row.
+ */
+.hero-sheen {
+  background-image:
+    radial-gradient(
+      ellipse 80% 55% at 50% 105%,
+      rgba(212, 175, 55, 0.28) 0%,
+      rgba(212, 175, 55, 0.08) 38%,
+      rgba(5, 5, 5, 0) 70%
+    ),
+    radial-gradient(ellipse 60% 40% at 50% -10%, rgba(212, 175, 55, 0.1) 0%, rgba(5, 5, 5, 0) 60%),
+    linear-gradient(180deg, #070707 0%, #0b0a08 55%, #050505 100%);
+  animation: hero-breathe 14s ease-in-out infinite;
+}
+
+.hero-grain {
+  opacity: 0.05;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.35) 0px,
+    rgba(255, 255, 255, 0.35) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 60%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 60%, #000 30%, transparent 78%);
+}
+
+@keyframes hero-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-sheen,
+  .hero-grain,
+  .animate-bounce {
+    animation: none !important;
+  }
 }

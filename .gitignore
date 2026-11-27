@@ -19,3 +19,7 @@ npm-debug.log*
 Thumbs.db
 .idea/
 .vscode/
+.tmp/
+build-output.txt
+serve-hero/
+nodever.txt

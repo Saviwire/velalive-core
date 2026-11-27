@@ -3,6 +3,10 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 
+// three.js + react-three are ~600 kB minified. App.js loads this file with
+// React.lazy(), so they arrive in their own chunk instead of in the initial
+// bundle. Report nothing here; it is always rendered inside Suspense.
+
 const CarouselItem = ({ url, position, rotation }) => {
   const texture = useTexture(url);
   return (
